@@ -66,8 +66,8 @@ public class App {
 
     // Muestra los datos del perfil de usuario
     public static void mostrarInformacionPerfil(int ID_usuario) {
-        System.out.println("-------------------------------------------");
-        System.out.println("| BIENVENIDO A ADMINISTRADOR DE PROYECTOS |");
-        System.out.println("-------------------------------------------");
+        System.out.println("----------------------------------------------");
+        System.out.println("| BIENVENIDO A ADMINISTRADOR DE PROYECTOS :D |");
+        System.out.println("----------------------------------------------");
     }
 }
