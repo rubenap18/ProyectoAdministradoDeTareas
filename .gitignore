@@ -1,0 +1,46 @@
+# Archivos de build y compilación generados por Java
+# --------------------------------------------------
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.log
+
+# Directorios de compilación de Maven, Gradle, etc.
+# --------------------------------------------------
+target/
+build/
+.gradle/
+
+# Dependencias y artefactos del proyecto
+# --------------------------------------------------
+# (Descomenta estas líneas si no quieres subir las dependencias del proyecto)
+# lib/
+# vendor/
+# bin/
+
+# Archivos de configuración del IDE (IntelliJ IDEA)
+# --------------------------------------------------
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Archivos de configuración del IDE (Eclipse)
+# --------------------------------------------------
+.settings/
+.classpath
+.project
+
+# Archivos de configuración del IDE (Visual Studio Code)
+# --------------------------------------------------
+.vscode/
+
+# Archivos temporales y del sistema operativo
+# --------------------------------------------------
+# Archivos de macOS
+.DS_Store
+
+# Archivos de Windows
+Thumbs.db
