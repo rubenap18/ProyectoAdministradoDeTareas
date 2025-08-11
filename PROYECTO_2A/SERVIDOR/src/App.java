@@ -3,6 +3,7 @@ import java.io.*;
 
 public class App {
     public static void main(String[] args) {
+        
         // Almacenamiento de datos
         String[][] perfiles = new String[100][3];  // ID, Nombre, Rol
         String[][] equipos = new String[50][2];    // ID, Nombre

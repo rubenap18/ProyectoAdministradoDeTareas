@@ -17,6 +17,7 @@ public class Cliente {
             System.out.println("-------------------------------------------");
 
             boolean salir = false;
+            
             while (!salir) {
                 System.out.println("\n---> 1. Perfiles");
                 System.out.println("---> 2. Equipos");
