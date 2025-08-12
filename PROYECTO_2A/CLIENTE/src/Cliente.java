@@ -219,9 +219,9 @@ public class Cliente {
                     System.out.println(respuesta.split("\\|")[1]);
                 } else {
                     System.out.println("\n--- LISTA DE TAREAS ---");
-                    String[] tareas = respuesta.split(";");
+                    String[] tareas = respuesta.split(";"); // Dividir el vector por ;
                     for (String tarea : tareas) {
-                        String[] datos = tarea.split(",");
+                        String[] datos = tarea.split(","); // Dividir el vector por ,
                         System.out.println("ID: " + datos[0] + 
                                        " | Proyecto: " + datos[1] +
                                        " | Título: " + datos[2] + 
