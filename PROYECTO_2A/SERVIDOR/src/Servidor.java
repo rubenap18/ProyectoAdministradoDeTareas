@@ -4,7 +4,7 @@ import java.io.*;
 public class Servidor {
     public static void main(String[] args) {
         
-        // Almacenamiento de datos en servidor
+        // Almacenamiento de datos en servidor con matrices
         String[][] perfiles = new String[100][3];  // ID, Nombre, Rol
         String[][] equipos = new String[50][2];    // ID, Nombre
         String[][] proyectos = new String[50][4];  // ID, Nombre, EquipoID, Estado
@@ -24,6 +24,7 @@ public class Servidor {
                     System.out.println("Cliente conectado: "+clientSocket.getInetAddress());
 
                     String comando;
+
                     while ((comando = in.readLine()) != null) {
                         System.out.println("Comando recibido: " + comando);
                         String respuesta = procesarComando(
@@ -45,7 +46,7 @@ public class Servidor {
         }
     }
 
-    static String procesarComando(
+    public static String procesarComando(
         String comando, 
         String[][] perfiles, 
         String[][] equipos, 

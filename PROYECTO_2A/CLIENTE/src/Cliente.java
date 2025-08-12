@@ -7,7 +7,7 @@ public class Cliente {
         
         try {
             // Conexión al servidor
-            Socket socket = new Socket("localhost", 1234);
+            Socket socket = new Socket("192.168.140.12", 1800); 
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             Scanner entrada = new Scanner(System.in);
@@ -51,7 +51,7 @@ public class Cliente {
         }
     }
 
-    // ---------------------- MÉTODOS PARA PERFILES ----------------------
+    // ---------------------- FUNCION PARA PERFILES ----------------------
     static void menuPerfiles(PrintWriter out, BufferedReader in, Scanner entrada) throws IOException {
         System.out.println("\n--- GESTIÓN DE PERFILES ---");
         System.out.println("1. Crear perfil");
@@ -65,23 +65,28 @@ public class Cliente {
             case 1:
                 System.out.print("Nombre del perfil: ");
                 String nombre = entrada.nextLine();
+
                 System.out.print("Rol: ");
                 String rol = entrada.nextLine();
-                out.println("CREAR_PERFIL|" + nombre + "|" + rol);
+
+                out.println("CREAR_PERFIL|"+nombre+"|"+rol);
                 System.out.println(in.readLine());
                 break;
 
             case 2:
                 out.println("LISTAR_PERFILES");
                 String respuesta = in.readLine();
+
                 if (respuesta.startsWith("ERROR")) {
-                    System.out.println(respuesta.split("\\|")[1]);
+                    System.out.println(respuesta.split("\\|")[1]); // Separar el arreglo con simbolo
+
                 } else {
                     System.out.println("\n--- LISTA DE PERFILES ---");
                     String[] perfiles = respuesta.split(";");
-                    for (String perfil : perfiles) {
+
+                    for (String perfil:perfiles) {
                         String[] datos = perfil.split(",");
-                        System.out.println("ID: " + datos[0] + " | Nombre: " + datos[1] + " | Rol: " + datos[2]);
+                        System.out.println("ID: "+datos[0]+" | Nombre: "+datos[1]+" | Rol: "+datos[2]);
                     }
                 }
                 break;
@@ -94,7 +99,7 @@ public class Cliente {
         }
     }
 
-    // ---------------------- MÉTODOS PARA EQUIPOS ----------------------
+    // ---------------------- FUNCION PARA EQUIPOS ----------------------
     static void menuEquipos(PrintWriter out, BufferedReader in, Scanner entrada) throws IOException {
         System.out.println("\n--- GESTIÓN DE EQUIPOS ---");
         System.out.println("1. Crear equipo");
@@ -135,7 +140,7 @@ public class Cliente {
         }
     }
 
-    // ---------------------- MÉTODOS PARA PROYECTOS ----------------------
+    // ---------------------- FUNCION PARA PROYECTOS ----------------------
     static void menuProyectos(PrintWriter out, BufferedReader in, Scanner entrada) throws IOException {
         System.out.println("\n--- GESTIÓN DE PROYECTOS ---");
         System.out.println("1. Crear proyecto");
@@ -190,7 +195,7 @@ public class Cliente {
         }
     }
 
-    // ---------------------- MÉTODOS PARA TAREAS ----------------------
+    // ---------------------- FUNCION PARA TAREAS ----------------------
     static void menuTareas(PrintWriter out, BufferedReader in, Scanner entrada) throws IOException {
         System.out.println("\n--- GESTIÓN DE TAREAS ---");
         System.out.println("1. Crear tarea");
@@ -254,7 +259,7 @@ public class Cliente {
         }
     }
 
-    // ---------------------- MÉTODOS PARA REPORTES ----------------------
+    // ---------------------- FUNCION PARA REPORTES ----------------------
     static void menuReportes(PrintWriter out, BufferedReader in, Scanner entrada) throws IOException {
         System.out.println("\n--- REPORTES ---");
         System.out.println("1. Avance de proyecto");
