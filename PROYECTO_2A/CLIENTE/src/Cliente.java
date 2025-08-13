@@ -18,6 +18,8 @@ public class Cliente {
 
             boolean salir = false;
             
+            // Bucle while para menu con salir validado
+
             while (!salir) {
                 System.out.println("\n---> 1. Perfiles");
                 System.out.println("---> 2. Equipos");
@@ -30,7 +32,7 @@ public class Cliente {
                 entrada.nextLine();
 
                 switch (opcion) {
-                    case 1: menuPerfiles(out, in, entrada); break;
+                    case 1: menuPerfiles(out, in, entrada); break; // Reciben los parametros requeridos
                     case 2: menuEquipos(out, in, entrada); break;
                     case 3: menuProyectos(out, in, entrada); break;
                     case 4: menuTareas(out, in, entrada); break;
