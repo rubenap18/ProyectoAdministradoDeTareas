@@ -26,8 +26,8 @@ public class Servidor {
                     String comando;
 
                     while ((comando = in.readLine()) != null) {
-                        System.out.println("Comando recibido: " + comando);
-                        String respuesta = procesarComando(
+                        System.out.println("Comando recibido: " + comando); // Muestra las acciones que se realizaron en el cliente
+                        String respuesta = procesarComando(  // Va a actuar dependiendo de la respuesta
                             comando, 
                             perfiles, 
                             equipos, 
@@ -35,7 +35,7 @@ public class Servidor {
                             tareas, 
                             contadores
                         );
-                        out.println(respuesta);
+                        out.println(respuesta); // Envia lo que hace o la respuesta que obtuvo al cliente
                     }
                 }catch(IOException e){
                     System.err.println("Error con cliente: " + e.getMessage());

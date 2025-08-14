@@ -177,7 +177,7 @@ public class Cliente {
                     String[] proyectos = respuesta.split(";");
 
                     for (String proyecto : proyectos) {
-                        String[] datos = proyecto.split(",");
+                        String[] datos = proyecto.split(","); // Cada que muestre los datos los separa por comas
                         System.out.println("ID: " + datos[0] + 
                                          " | Nombre: " + datos[1] + 
                                          " | Equipo: " + (datos[2].equals("null") ? "Sin asignar" : datos[2]) + 
@@ -189,10 +189,12 @@ public class Cliente {
             case 3:
                 System.out.print("ID del proyecto: ");
                 int proyectoID = entrada.nextInt();
+
                 System.out.print("ID del equipo: ");
                 int equipoID = entrada.nextInt();
                 entrada.nextLine();
-                out.println("ASIGNAR_EQUIPO|" + proyectoID + "|" + equipoID);
+
+                out.println("ASIGNAR_EQUIPO|" + proyectoID + "|" + equipoID); // Recibe los datos desde el servidor
                 System.out.println(in.readLine());
                 break;
 
@@ -219,9 +221,11 @@ public class Cliente {
             case 1:
                 System.out.print("Título de la tarea: ");
                 String titulo = entrada.nextLine();
+
                 System.out.print("ID del proyecto: ");
                 int proyectoID = entrada.nextInt();
                 entrada.nextLine();
+
                 out.println("CREAR_TAREA|" + proyectoID + "|" + titulo);
                 System.out.println(in.readLine());
                 break;
@@ -229,8 +233,10 @@ public class Cliente {
             case 2:
                 out.println("LISTAR_TAREAS");
                 String respuesta = in.readLine();
+
                 if (respuesta.startsWith("ERROR")) {
                     System.out.println(respuesta.split("\\|")[1]);
+
                 } else {
                     System.out.println("\n--- LISTA DE TAREAS ---");
                     String[] tareas = respuesta.split(";"); // Dividir el vector por ;
@@ -250,13 +256,15 @@ public class Cliente {
                 System.out.print("ID de la tarea: ");
                 int tareaID = entrada.nextInt();
                 entrada.nextLine();
+
                 System.out.println("1. Pendiente");
                 System.out.println("2. En progreso");
                 System.out.println("3. Completado");
                 System.out.print("Nuevo estado: ");
                 int estado = entrada.nextInt();
                 entrada.nextLine();
-                out.println("CAMBIAR_ESTADO_TAREA|" + tareaID + "|" + estado);
+
+                out.println("CAMBIAR_ESTADO_TAREA|" + tareaID + "|" + estado); // Recibe los datos desde el servidor
                 System.out.println(in.readLine());
                 break;
 
@@ -283,7 +291,8 @@ public class Cliente {
                 System.out.print("ID del proyecto: ");
                 int proyectoID = entrada.nextInt();
                 entrada.nextLine();
-                out.println("REPORTE_AVANCE|" + proyectoID);
+
+                out.println("REPORTE_AVANCE|" + proyectoID); // Recibe el dato desde el servidor
                 System.out.println(in.readLine());
                 break;
 
