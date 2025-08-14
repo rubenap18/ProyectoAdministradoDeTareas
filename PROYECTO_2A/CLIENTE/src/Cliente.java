@@ -7,9 +7,9 @@ public class Cliente {
         
         try {
             // Conexión al servidor
-            Socket socket = new Socket("192.168.140.12", 1800); 
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            Socket socket = new Socket("192.168.140.12", 1800); // IP destino (computadora con el servidor)
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true); // Envia datos al cliente
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Lee datos enviados entre cliente y servidor
             Scanner entrada = new Scanner(System.in);
 
             System.out.println("-------------------------------------------");
@@ -32,7 +32,7 @@ public class Cliente {
                 entrada.nextLine();
 
                 switch (opcion) {
-                    case 1: menuPerfiles(out, in, entrada); break; // Reciben los parametros requeridos
+                    case 1: menuPerfiles(out, in, entrada); break; // Reciben los parametros requeridos para funcionar entre cliente y servidor
                     case 2: menuEquipos(out, in, entrada); break;
                     case 3: menuProyectos(out, in, entrada); break;
                     case 4: menuTareas(out, in, entrada); break;
@@ -88,7 +88,7 @@ public class Cliente {
 
                     for (String perfil:perfiles) {
                         String[] datos = perfil.split(",");
-                        System.out.println("ID: "+datos[0]+" | Nombre: "+datos[1]+" | Rol: "+datos[2]);
+                        System.out.println("ID: "+datos[0]+" | Nombre: "+datos[1]+" | Rol: "+datos[2]); // Ubicacion de los datos dentro de las matrices
                     }
                 }
                 break;
@@ -122,12 +122,15 @@ public class Cliente {
             case 2:
                 out.println("LISTAR_EQUIPOS");
                 String respuesta = in.readLine();
+
                 if (respuesta.startsWith("ERROR")) {
                     System.out.println(respuesta.split("\\|")[1]);
+
                 } else {
                     System.out.println("\n--- LISTA DE EQUIPOS ---");
                     String[] equipos = respuesta.split(";");
-                    for (String equipo : equipos) {
+
+                    for (String equipo:equipos) { // Bucle for each para mostrar los datos del arreglo especifico
                         String[] datos = equipo.split(",");
                         System.out.println("ID: " + datos[0] + " | Nombre: " + datos[1]);
                     }
@@ -150,13 +153,14 @@ public class Cliente {
         System.out.println("3. Asignar equipo a proyecto");
         System.out.println("4. Volver al menú principal");
         System.out.print("Opción: ");
-        int opcion = entrada.nextInt();
+        int opcion = entrada.nextInt(); // Usuario digira opciones para que el switch case interactue
         entrada.nextLine();
 
         switch (opcion) {
             case 1:
                 System.out.print("Nombre del proyecto: ");
                 String nombre = entrada.nextLine();
+                
                 out.println("CREAR_PROYECTO|" + nombre);
                 System.out.println(in.readLine());
                 break;
@@ -164,11 +168,14 @@ public class Cliente {
             case 2:
                 out.println("LISTAR_PROYECTOS");
                 String respuesta = in.readLine();
+
                 if (respuesta.startsWith("ERROR")) {
                     System.out.println(respuesta.split("\\|")[1]);
+
                 } else {
                     System.out.println("\n--- LISTA DE PROYECTOS ---");
                     String[] proyectos = respuesta.split(";");
+
                     for (String proyecto : proyectos) {
                         String[] datos = proyecto.split(",");
                         System.out.println("ID: " + datos[0] + 
