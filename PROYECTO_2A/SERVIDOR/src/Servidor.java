@@ -18,8 +18,8 @@ public class Servidor {
             while (true) {
                 
                 try (Socket clientSocket = serverSocket.accept();
-                     BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                     PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
+                     BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); // Recibir respuestas del cliente
+                     PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) { // Enviar respuestas al cliente
 
                     System.out.println("Cliente conectado: "+clientSocket.getInetAddress());
 
@@ -47,26 +47,29 @@ public class Servidor {
     }
 
     public static String procesarComando(
-        String comando, 
-        String[][] perfiles,  // Recibe como parametro los arreglos
-        String[][] equipos, 
-        String[][] proyectos, 
-        String[][] tareas, 
-        int[] contadores
-    )  
+            String comando, 
+            String[][] perfiles,  // Recibe como parametro los arreglos
+            String[][] equipos, 
+            String[][] proyectos, 
+            String[][] tareas, 
+            int[] contadores
+        )  
 
     {
         String[] partes = comando.split("\\|"); // Extrae el primer elemento del arreglo que corresponde al comando
-        String tipoComando = partes[0];               // y los separa con el simbolo |
+        String tipoComando = partes[0];               // y los separa con el simbolo | para realizar la accion
 
         try {
             switch (tipoComando) {
                 // ---- PERFILES ---- 
                 case "CREAR_PERFIL":
+                    
                     if (partes.length != 3) return "ERROR | FORMATO INCORRECTO"; // Debe ser 3 porque matriz tiene 3 espacios (accion, nombre, rol)
+                    
                     perfiles[contadores[0]][0] = String.valueOf(contadores[0]); // Convertir valor a String
                     perfiles[contadores[0]][1] = partes[1];
                     perfiles[contadores[0]][2] = partes[2];
+
                     return "Perfil creado con ID: " + contadores[0]++;
 
                 case "LISTAR_PERFILES":
@@ -74,7 +77,7 @@ public class Servidor {
                     StringBuilder sbPerfiles = new StringBuilder(); // Se crea para poder formatear la lista despues
 
                     for (int i = 0; i < contadores[0]; i++) {
-                        sbPerfiles.append(String.join(",", perfiles[i]));
+                        sbPerfiles.append(String.join(",", perfiles[i])); // Manda las cosas al final para separar los datos
                         if (i < contadores[0] - 1) sbPerfiles.append(";"); // Formatea la lista antes de enviarla al cliente
                     }
                     return "|" + sbPerfiles.toString();
@@ -115,7 +118,7 @@ public class Servidor {
                                         (proyectos[i][2] == null ? "null" : proyectos[i][2]) + "," + proyectos[i][3]); // Valida que haya un parametro en [i][2]
                         if (i < contadores[2] - 1) sbProyectos.append(";");
                     }
-                    return "|" + sbProyectos.toString(); // Muestra los datos creados convertidos a String
+                    return "|" + sbProyectos.toString(); // Muestra los datos creados con int convertidos a String
 
                 case "ASIGNAR_EQUIPO":
                     if (partes.length != 3) return "ERROR|Formato: ASIGNAR_EQUIPO|proyectoID|equipoID";
@@ -133,9 +136,8 @@ public class Servidor {
                 // ---- TAREAS ----
                 case "CREAR_TAREA":
 
-                
                     if (partes.length != 3) return "ERROR | Formato incorrecto"; // Valida que el formato sea correctp (3 elementos)
-                    int proyectoIDTarea = Integer.parseInt(partes[1]);
+                    int proyectoIDTarea = Integer.parseInt(partes[1]); // Convertir el ID de int a String
                     
                     if (proyectoIDTarea < 0 || proyectoIDTarea >= contadores[2]) // Valida el ID del proyecto
                         return "ERROR | ID de proyecto no válido";
@@ -149,7 +151,7 @@ public class Servidor {
                     tareas[contadores[3]][5] = "0";
                     return "| Tarea creada con ID: " + contadores[3]++;
 
-                    //
+                    
                 case "LISTAR_TAREAS":
                     if (contadores[3] == 0) return "ERROR | No hay tareas registradas";
                     StringBuilder sbTareas = new StringBuilder(); // Concatena cadenas de texto
