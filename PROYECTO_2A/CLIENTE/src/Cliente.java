@@ -7,9 +7,9 @@ public class Cliente {
         
         try {
             // Conexión al servidor
-            Socket socket = new Socket("localhost", 1234);
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            Socket socket = new Socket("192.168.140.12", 1800); // IP destino (computadora con el servidor)
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true); // Envia datos al cliente
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Lee datos enviados entre cliente y servidor
             Scanner entrada = new Scanner(System.in);
 
             System.out.println("-------------------------------------------");
@@ -18,6 +18,8 @@ public class Cliente {
 
             boolean salir = false;
             
+            // Bucle while para menu con salir validado
+
             while (!salir) {
                 System.out.println("\n---> 1. Perfiles");
                 System.out.println("---> 2. Equipos");
@@ -30,7 +32,7 @@ public class Cliente {
                 entrada.nextLine();
 
                 switch (opcion) {
-                    case 1: menuPerfiles(out, in, entrada); break;
+                    case 1: menuPerfiles(out, in, entrada); break; // Reciben los parametros requeridos para funcionar entre cliente y servidor
                     case 2: menuEquipos(out, in, entrada); break;
                     case 3: menuProyectos(out, in, entrada); break;
                     case 4: menuTareas(out, in, entrada); break;
@@ -51,7 +53,7 @@ public class Cliente {
         }
     }
 
-    // ---------------------- MÉTODOS PARA PERFILES ----------------------
+    // ---------------------- FUNCION PARA PERFILES ----------------------
     static void menuPerfiles(PrintWriter out, BufferedReader in, Scanner entrada) throws IOException {
         System.out.println("\n--- GESTIÓN DE PERFILES ---");
         System.out.println("1. Crear perfil");
@@ -65,23 +67,28 @@ public class Cliente {
             case 1:
                 System.out.print("Nombre del perfil: ");
                 String nombre = entrada.nextLine();
+
                 System.out.print("Rol: ");
                 String rol = entrada.nextLine();
-                out.println("CREAR_PERFIL|" + nombre + "|" + rol);
+
+                out.println("CREAR_PERFIL|"+nombre+"|"+rol);
                 System.out.println(in.readLine());
                 break;
 
             case 2:
                 out.println("LISTAR_PERFILES");
                 String respuesta = in.readLine();
+
                 if (respuesta.startsWith("ERROR")) {
-                    System.out.println(respuesta.split("\\|")[1]);
+                    System.out.println(respuesta.split("\\|")[1]); // Separar el arreglo con simbolo
+
                 } else {
                     System.out.println("\n--- LISTA DE PERFILES ---");
                     String[] perfiles = respuesta.split(";");
-                    for (String perfil : perfiles) {
+
+                    for (String perfil:perfiles) {
                         String[] datos = perfil.split(",");
-                        System.out.println("ID: " + datos[0] + " | Nombre: " + datos[1] + " | Rol: " + datos[2]);
+                        System.out.println("ID: "+datos[0]+" | Nombre: "+datos[1]+" | Rol: "+datos[2]); // Ubicacion de los datos dentro de las matrices
                     }
                 }
                 break;
@@ -94,7 +101,7 @@ public class Cliente {
         }
     }
 
-    // ---------------------- MÉTODOS PARA EQUIPOS ----------------------
+    // ---------------------- FUNCION PARA EQUIPOS ----------------------
     static void menuEquipos(PrintWriter out, BufferedReader in, Scanner entrada) throws IOException {
         System.out.println("\n--- GESTIÓN DE EQUIPOS ---");
         System.out.println("1. Crear equipo");
@@ -115,12 +122,15 @@ public class Cliente {
             case 2:
                 out.println("LISTAR_EQUIPOS");
                 String respuesta = in.readLine();
+
                 if (respuesta.startsWith("ERROR")) {
                     System.out.println(respuesta.split("\\|")[1]);
+
                 } else {
                     System.out.println("\n--- LISTA DE EQUIPOS ---");
                     String[] equipos = respuesta.split(";");
-                    for (String equipo : equipos) {
+
+                    for (String equipo:equipos) { // Bucle for each para mostrar los datos del arreglo especifico
                         String[] datos = equipo.split(",");
                         System.out.println("ID: " + datos[0] + " | Nombre: " + datos[1]);
                     }
@@ -135,7 +145,7 @@ public class Cliente {
         }
     }
 
-    // ---------------------- MÉTODOS PARA PROYECTOS ----------------------
+    // ---------------------- FUNCION PARA PROYECTOS ----------------------
     static void menuProyectos(PrintWriter out, BufferedReader in, Scanner entrada) throws IOException {
         System.out.println("\n--- GESTIÓN DE PROYECTOS ---");
         System.out.println("1. Crear proyecto");
@@ -143,13 +153,14 @@ public class Cliente {
         System.out.println("3. Asignar equipo a proyecto");
         System.out.println("4. Volver al menú principal");
         System.out.print("Opción: ");
-        int opcion = entrada.nextInt();
+        int opcion = entrada.nextInt(); // Usuario digira opciones para que el switch case interactue
         entrada.nextLine();
 
         switch (opcion) {
             case 1:
                 System.out.print("Nombre del proyecto: ");
                 String nombre = entrada.nextLine();
+                
                 out.println("CREAR_PROYECTO|" + nombre);
                 System.out.println(in.readLine());
                 break;
@@ -157,13 +168,16 @@ public class Cliente {
             case 2:
                 out.println("LISTAR_PROYECTOS");
                 String respuesta = in.readLine();
+
                 if (respuesta.startsWith("ERROR")) {
                     System.out.println(respuesta.split("\\|")[1]);
+
                 } else {
                     System.out.println("\n--- LISTA DE PROYECTOS ---");
                     String[] proyectos = respuesta.split(";");
+
                     for (String proyecto : proyectos) {
-                        String[] datos = proyecto.split(",");
+                        String[] datos = proyecto.split(","); // Cada que muestre los datos los separa por comas
                         System.out.println("ID: " + datos[0] + 
                                          " | Nombre: " + datos[1] + 
                                          " | Equipo: " + (datos[2].equals("null") ? "Sin asignar" : datos[2]) + 
@@ -175,10 +189,12 @@ public class Cliente {
             case 3:
                 System.out.print("ID del proyecto: ");
                 int proyectoID = entrada.nextInt();
+
                 System.out.print("ID del equipo: ");
                 int equipoID = entrada.nextInt();
                 entrada.nextLine();
-                out.println("ASIGNAR_EQUIPO|" + proyectoID + "|" + equipoID);
+
+                out.println("ASIGNAR_EQUIPO|" + proyectoID + "|" + equipoID); // Recibe los datos desde el servidor
                 System.out.println(in.readLine());
                 break;
 
@@ -190,7 +206,7 @@ public class Cliente {
         }
     }
 
-    // ---------------------- MÉTODOS PARA TAREAS ----------------------
+    // ---------------------- FUNCION PARA TAREAS ----------------------
     static void menuTareas(PrintWriter out, BufferedReader in, Scanner entrada) throws IOException {
         System.out.println("\n--- GESTIÓN DE TAREAS ---");
         System.out.println("1. Crear tarea");
@@ -205,9 +221,11 @@ public class Cliente {
             case 1:
                 System.out.print("Título de la tarea: ");
                 String titulo = entrada.nextLine();
+
                 System.out.print("ID del proyecto: ");
                 int proyectoID = entrada.nextInt();
                 entrada.nextLine();
+
                 out.println("CREAR_TAREA|" + proyectoID + "|" + titulo);
                 System.out.println(in.readLine());
                 break;
@@ -215,8 +233,10 @@ public class Cliente {
             case 2:
                 out.println("LISTAR_TAREAS");
                 String respuesta = in.readLine();
+
                 if (respuesta.startsWith("ERROR")) {
                     System.out.println(respuesta.split("\\|")[1]);
+
                 } else {
                     System.out.println("\n--- LISTA DE TAREAS ---");
                     String[] tareas = respuesta.split(";"); // Dividir el vector por ;
@@ -236,13 +256,15 @@ public class Cliente {
                 System.out.print("ID de la tarea: ");
                 int tareaID = entrada.nextInt();
                 entrada.nextLine();
+
                 System.out.println("1. Pendiente");
                 System.out.println("2. En progreso");
                 System.out.println("3. Completado");
                 System.out.print("Nuevo estado: ");
                 int estado = entrada.nextInt();
                 entrada.nextLine();
-                out.println("CAMBIAR_ESTADO_TAREA|" + tareaID + "|" + estado);
+
+                out.println("CAMBIAR_ESTADO_TAREA|" + tareaID + "|" + estado); // Recibe los datos desde el servidor
                 System.out.println(in.readLine());
                 break;
 
@@ -254,7 +276,7 @@ public class Cliente {
         }
     }
 
-    // ---------------------- MÉTODOS PARA REPORTES ----------------------
+    // ---------------------- FUNCION PARA REPORTES ----------------------
     static void menuReportes(PrintWriter out, BufferedReader in, Scanner entrada) throws IOException {
         System.out.println("\n--- REPORTES ---");
         System.out.println("1. Avance de proyecto");
@@ -269,7 +291,8 @@ public class Cliente {
                 System.out.print("ID del proyecto: ");
                 int proyectoID = entrada.nextInt();
                 entrada.nextLine();
-                out.println("REPORTE_AVANCE|" + proyectoID);
+
+                out.println("REPORTE_AVANCE|" + proyectoID); // Recibe el dato desde el servidor
                 System.out.println(in.readLine());
                 break;
 
