@@ -6,7 +6,7 @@ public class Cliente {
     public static void main(String[] args) {
         
         try {
-            // Conexión al servidor
+            // Cosas para establecer conexion al servidor
             Socket socket = new Socket("192.168.140.12", 1800); // IP destino (computadora con el servidor)
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true); // Envia datos al cliente
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Lee datos enviados entre cliente y servidor
